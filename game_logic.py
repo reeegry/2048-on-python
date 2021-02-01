@@ -37,22 +37,11 @@ def game_active_function():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     for row in Grid.massive:
-                        methods.left_sort_in_mas(row)
+                        row.sort(reverse=True)
 
                 if event.key == pygame.K_RIGHT:
                     for row in Grid.massive:
-                        # Counting the number of zeros
-                        zeroes_count = row.count(0)
-                        # Create a list from the number of zeros in row
-                        zeroes_count_list = [0] * zeroes_count
-                        # Until these lists are equal, move zeros to the left
-                        while zeroes_count_list != row[:zeroes_count]:
-                            last_zero_index = methods.found_last_number(row, 0)
-                            if last_zero_index >= 0 or last_zero_index <= 3:
-                                del row[last_zero_index]
-                                row.insert(0, 0)
-                            else:
-                                continue
+                        row.sort()
 
                 elif event.key == pygame.K_UP:
                     # Add a list that swaps columns and rows

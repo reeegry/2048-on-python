@@ -1,34 +1,6 @@
 import random
 
 
-def left_sort_in_mas(list_for_left_sort):
-    # Count the number of zeros in the list
-    zeroes_count = list_for_left_sort.count(0)
-    # Create a list with the number of zeros zeroes_count
-    zeroes_count_list = [0] * zeroes_count
-    len_row = len(list_for_left_sort)
-    while zeroes_count_list != list_for_left_sort[len_row - zeroes_count:]:
-        first_zero_index = list_for_left_sort.index(0)
-        del list_for_left_sort[first_zero_index]
-        list_for_left_sort.append(0)
-    return list_for_left_sort
-
-
-# The function returns the index of the last element with the value number in the list row
-def found_last_number(row_to_find_last_number, number):
-    try:
-        zero_index = row_to_find_last_number.index(number)
-        number_count = row_to_find_last_number.count(number)
-        iteration_count = 1
-        while number_count != iteration_count:
-            zero_index = row_to_find_last_number.index(number, zero_index + 1, len(row_to_find_last_number) - 1)
-            iteration_count += 1
-        return zero_index
-    except ValueError:
-        zero_index = -1
-        return zero_index
-
-
 # Create random number in grid
 def random_number(GridClass):
     random_column = random.randint(0, 3)
