@@ -36,27 +36,32 @@ def game_active_function():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    for row in Grid.massive:
-                        row.sort(reverse=True)
+                    for row in range(len(Grid.massive)):
+                        row_sorted = methods.sort_row_for_move_up_and_left(Grid.massive[row])
+                        Grid.massive[row] = methods.multiplication_by_2_left(row_sorted)
 
                 if event.key == pygame.K_RIGHT:
-                    for row in Grid.massive:
-                        row.sort()
+                    for row in range(len(Grid.massive)):
+                        row_sorted = methods.sort_row_for_move_down_and_right(Grid.massive[row])
+                        print(row_sorted)
+                        Grid.massive[row] = methods.multiplication_by_2_right(row_sorted)
 
                 elif event.key == pygame.K_UP:
                     # Add a list that swaps columns and rows
                     massive_for_move_up = []
                     massive_for_move_up_sorted = []
 
-                    for column in range(len(mas)):
+                    for column in range(len(Grid.massive)):
                         massive_for_add = []
-                        for row in range(len(mas)):
+                        for row in range(len(Grid.massive)):
                             # Adding a row to Massive_for_move_up that was a column in mas
                             massive_for_add.append(Grid.massive[row][column])
                         massive_for_move_up.append(massive_for_add)
 
                     for j in massive_for_move_up:
-                        massive_for_move_up_sorted.append(methods.sort_row_for_move_up(j))
+                        # First sort the list, then multiply by 2
+                        massive_sorted = methods.sort_row_for_move_up_and_left(j)
+                        massive_for_move_up_sorted.append(methods.multiplication_by_2_left(massive_sorted))
 
                     # Transpose massive_for_move_up_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_up_sorted)))
@@ -66,17 +71,21 @@ def game_active_function():
                     massive_for_move_down = []
                     massive_for_move_down_sorted = []
 
-                    for column in range(len(mas)):
+                    for column in range(len(Grid.massive)):
                         massive_for_add = []
-                        for row in range(len(mas)):
-                            # Add to massive_for_move_up a line that was a column in mas
+                        for row in range(len(Grid.massive)):
+                            # Add to massive_for_move_down a line that was a column in mas
                             massive_for_add.append(Grid.massive[row][column])
                         massive_for_move_down.append(massive_for_add)
 
                     for j in massive_for_move_down:
-                        massive_for_move_down_sorted.append(methods.sort_row_for_move_down(j))
+                        # First we flip the list so that it looks like the situation when moving up
+                        # Then we multiply by 2 and flip again
+                        reversed(methods.sort_row_for_move_down_and_right(j))
+                        methods.multiplication_by_2_right(j)
+                        massive_for_move_down_sorted.append(methods.sort_row_for_move_down_and_right(j))
 
-                    # Transpose massive_for_move_dow_sorted
+                    # Transpose massive_for_move_down_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_down_sorted)))
 
         Grid.build_grid()
