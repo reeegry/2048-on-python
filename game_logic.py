@@ -51,12 +51,7 @@ def game_active_function():
                     massive_for_move_up = []
                     massive_for_move_up_sorted = []
 
-                    for column in range(len(Grid.massive)):
-                        massive_for_add = []
-                        for row in range(len(Grid.massive)):
-                            # Adding a row to Massive_for_move_up that was a column in mas
-                            massive_for_add.append(Grid.massive[row][column])
-                        massive_for_move_up.append(massive_for_add)
+                    methods.column_to_row(massive_for_move_up, Grid.massive)
 
                     for j in massive_for_move_up:
                         # First sort the list, then multiply by 2
@@ -71,12 +66,7 @@ def game_active_function():
                     massive_for_move_down = []
                     massive_for_move_down_sorted = []
 
-                    for column in range(len(Grid.massive)):
-                        massive_for_add = []
-                        for row in range(len(Grid.massive)):
-                            # Add to massive_for_move_down a line that was a column in mas
-                            massive_for_add.append(Grid.massive[row][column])
-                        massive_for_move_down.append(massive_for_add)
+                    methods.column_to_row(massive_for_move_down, Grid.massive)
 
                     for j in massive_for_move_down:
                         # First we flip the list so that it looks like the situation when moving up

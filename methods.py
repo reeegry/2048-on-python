@@ -65,16 +65,6 @@ def multiplication_by_2_left(sorted_massive):
     return sorted_massive
 
 
-# def multiplication_by_2_right(sorted_massive):
-#     for number in range(1, len(sorted_massive)):
-#         if sorted_massive[number - 1] == sorted_massive[number] and sorted_massive[number] != 0:
-#             sorted_massive[number] *= 2
-#             del sorted_massive[number - 1]
-#             sorted_massive.insert(0, 0)
-#             print(sorted_massive)
-#
-#     return sorted_massive
-
 def multiplication_by_2_right(sorted_massive):
     for number in range(len(sorted_massive) - 1, 0, -1):
         if sorted_massive[number - 1] == sorted_massive[number] and sorted_massive[number] != 0:
@@ -86,4 +76,12 @@ def multiplication_by_2_right(sorted_massive):
     return sorted_massive
 
 
-print(multiplication_by_2_right([0, 2, 2, 2]))
+def column_to_row(massive_for_move, grid_massive):
+    for column in range(len(grid_massive)):
+        massive_for_add = []
+        for row in range(len(grid_massive)):
+            # Add to massive_for_move_down a line that was a column in mas
+            massive_for_add.append(grid_massive[row][column])
+        massive_for_move.append(massive_for_add)
+
+
