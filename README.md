@@ -1,7 +1,5 @@
-# 2048-on-python
-
 2048 game on python with using pygame
-=================================
+-----------------
 below are the things that are presented, I would like to add to the game
 ----------------------------
 
