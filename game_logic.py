@@ -17,7 +17,7 @@ pygame.display.set_caption('2048')
 
 mas = [[0] * 4 for i in range(4)]
 
-Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen)
+Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '')
 
 for j in range(8):
     methods.random_number(Grid)
