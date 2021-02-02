@@ -19,7 +19,7 @@ mas = [[0] * 4 for i in range(4)]
 
 Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen)
 
-for j in range(3):
+for j in range(8):
     methods.random_number(Grid)
 
 pygame.init()
@@ -28,6 +28,8 @@ pygame.init()
 def game_active_function():
 
     game_active = True
+    add_2_or_4_on_grid = False
+    count = 0
 
     while game_active:
         for event in pygame.event.get():
@@ -71,16 +73,28 @@ def game_active_function():
                     for j in massive_for_move_down:
                         # First we flip the list so that it looks like the situation when moving up
                         # Then we multiply by 2 and flip again
-                        reversed(methods.sort_row_for_move_down_and_right(j))
+                        # reversed(methods.sort_row_for_move_down_and_right(j))
+                        j = methods.sort_row_for_move_down_and_right(j)
+                        print(*j)
+                        print('-'*20)
                         methods.multiplication_by_2_right(j)
                         massive_for_move_down_sorted.append(methods.sort_row_for_move_down_and_right(j))
 
                     # Transpose massive_for_move_down_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_down_sorted)))
 
+                add_2_or_4_on_grid = True
+
         Grid.build_grid()
 
         pygame.display.flip()
+
+        if add_2_or_4_on_grid and count % 50 == 0:
+            methods.random_number(Grid)
+            add_2_or_4_on_grid = False
+            count = 0
+
+        count += 1
 
 
 if __name__ == '__main__':
