@@ -45,7 +45,6 @@ def game_active_function():
                 if event.key == pygame.K_RIGHT:
                     for row in range(len(Grid.massive)):
                         row_sorted = methods.sort_row_for_move_down_and_right(Grid.massive[row])
-                        print(row_sorted)
                         Grid.massive[row] = methods.multiplication_by_2_right(row_sorted)
 
                 elif event.key == pygame.K_UP:
@@ -71,14 +70,9 @@ def game_active_function():
                     methods.column_to_row(massive_for_move_down, Grid.massive)
 
                     for j in massive_for_move_down:
-                        # First we flip the list so that it looks like the situation when moving up
-                        # Then we multiply by 2 and flip again
-                        # reversed(methods.sort_row_for_move_down_and_right(j))
+                        # First sort the list, then multiply by 2
                         j = methods.sort_row_for_move_down_and_right(j)
-                        print(*j)
-                        print('-'*20)
-                        methods.multiplication_by_2_right(j)
-                        massive_for_move_down_sorted.append(methods.sort_row_for_move_down_and_right(j))
+                        massive_for_move_down_sorted.append(methods.multiplication_by_2_right(j))
 
                     # Transpose massive_for_move_down_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_down_sorted)))
@@ -89,7 +83,7 @@ def game_active_function():
 
         pygame.display.flip()
 
-        if add_2_or_4_on_grid and count % 50 == 0:
+        if add_2_or_4_on_grid and count % 65 == 0:
             methods.random_number(Grid)
             add_2_or_4_on_grid = False
             count = 0
