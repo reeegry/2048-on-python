@@ -83,7 +83,3 @@ def column_to_row(massive_for_move, grid_massive):
             # Add to massive_for_move_down a line that was a column in mas
             massive_for_add.append(grid_massive[row][column])
         massive_for_move.append(massive_for_add)
-
-j = [2, 0, 0, 2]
-j = sort_row_for_move_down_and_right(j)
-print(multiplication_by_2_right(j))
