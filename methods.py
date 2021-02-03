@@ -3,15 +3,15 @@ import random
 
 # Create random number in grid
 def random_number(GridClass):
-    random_column = random.randint(0, 3)
-    random_row = random.randint(0, 3)
+    random_column = random.randint(0, GridClass.column - 1)
+    random_row = random.randint(0, GridClass.row - 1)
     random_position = GridClass.massive[random_row][random_column]
     while random_position != 0:
         if random_position == 0:
             break
         else:
-            random_column = random.randint(0, 3)
-            random_row = random.randint(0, 3)
+            random_column = random.randint(0, GridClass.column - 1)
+            random_row = random.randint(0, GridClass.row - 1)
             random_position = GridClass.massive[random_row][random_column]
 
     if random.random() <= 0.75:

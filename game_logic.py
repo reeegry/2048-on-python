@@ -1,11 +1,15 @@
+from math import ceil
 import pygame
 import sys
 import grid
 import methods
 
-SIZE_BLOCK = 100
-MARGIN = 5
-WIDTH = HEIGHT = SIZE_BLOCK * 4 + MARGIN * 5
+GRID_SIZE = 8
+
+SIZE_BLOCK = 400 // GRID_SIZE
+MARGIN = ceil(SIZE_BLOCK * 0.02)
+print(MARGIN)
+WIDTH = HEIGHT = SIZE_BLOCK * GRID_SIZE + MARGIN * (GRID_SIZE + 1)
 
 BLACK = 0, 0, 0
 RED = 255, 0, 0
@@ -15,11 +19,11 @@ WHITE = 255, 255, 255
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('2048')
 
-mas = [[0] * 4 for i in range(4)]
+mas = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
 
-Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '')
+Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE)
 
-for j in range(8):
+for j in range(GRID_SIZE):
     methods.random_number(Grid)
 
 pygame.init()
