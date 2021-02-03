@@ -10,18 +10,20 @@ SIZE_BLOCK = 400 // GRID_SIZE
 MARGIN = ceil(SIZE_BLOCK * 0.02)
 print(MARGIN)
 WIDTH = HEIGHT = SIZE_BLOCK * GRID_SIZE + MARGIN * (GRID_SIZE + 1)
+# Top padding to display the invoice in the future
+UP_BLOCK = 0
 
 BLACK = 0, 0, 0
 RED = 255, 0, 0
 GREEN = 0, 255, 0
 WHITE = 255, 255, 255
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT + UP_BLOCK))
 pygame.display.set_caption('2048')
 
 mas = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
 
-Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE)
+Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE, UP_BLOCK)
 
 for j in range(GRID_SIZE):
     methods.random_number(Grid)
@@ -38,7 +40,6 @@ def game_active_function():
     while game_active:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                game_active = False
                 sys.exit()
             if event.type == pygame.KEYDOWN:
 
@@ -88,6 +89,13 @@ def game_active_function():
                     add_2_or_4_on_grid = False
                 else:
                     add_2_or_4_on_grid = True
+
+        no_zeroes = 0
+        for row in Grid.massive:
+            if 0 not in row:
+                no_zeroes += 1
+            if no_zeroes == GRID_SIZE:
+                sys.exit()
 
         Grid.build_grid()
 

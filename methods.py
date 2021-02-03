@@ -60,7 +60,6 @@ def multiplication_by_2_left(sorted_massive):
             sorted_massive[number] *= 2
             del sorted_massive[number - 1]
             sorted_massive.append(0)
-            print(sorted_massive)
 
     return sorted_massive
 
@@ -71,7 +70,6 @@ def multiplication_by_2_right(sorted_massive):
             sorted_massive[number] *= 2
             del sorted_massive[number - 1]
             sorted_massive.insert(0, 0)
-            print(sorted_massive)
 
     return sorted_massive
 
