@@ -4,7 +4,7 @@ import sys
 import grid
 import methods
 
-GRID_SIZE = 8
+GRID_SIZE = 4
 
 SIZE_BLOCK = 400 // GRID_SIZE
 MARGIN = ceil(SIZE_BLOCK * 0.02)
@@ -41,6 +41,9 @@ def game_active_function():
                 game_active = False
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+
+                massive_old = Grid.massive.copy()
+
                 if event.key == pygame.K_LEFT:
                     for row in range(len(Grid.massive)):
                         row_sorted = methods.sort_row_for_move_up_and_left(Grid.massive[row])
@@ -81,18 +84,19 @@ def game_active_function():
                     # Transpose massive_for_move_down_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_down_sorted)))
 
-                add_2_or_4_on_grid = True
+                if massive_old == Grid.massive:
+                    add_2_or_4_on_grid = False
+                else:
+                    add_2_or_4_on_grid = True
 
         Grid.build_grid()
 
         pygame.display.flip()
 
-        if add_2_or_4_on_grid and count % 65 == 0:
+        if add_2_or_4_on_grid:
+            pygame.time.delay(120)
             methods.random_number(Grid)
             add_2_or_4_on_grid = False
-            count = 0
-
-        count += 1
 
 
 if __name__ == '__main__':
