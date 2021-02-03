@@ -8,10 +8,8 @@ GRID_SIZE = 4
 
 SIZE_BLOCK = 400 // GRID_SIZE
 MARGIN = ceil(SIZE_BLOCK * 0.02)
-print(MARGIN)
 WIDTH = HEIGHT = SIZE_BLOCK * GRID_SIZE + MARGIN * (GRID_SIZE + 1)
-# Top padding to display the invoice in the future
-UP_BLOCK = 0
+UP_BLOCK = 40
 
 BLACK = 0, 0, 0
 RED = 255, 0, 0
@@ -23,7 +21,7 @@ pygame.display.set_caption('2048')
 
 mas = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
 
-Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE, UP_BLOCK)
+Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE, UP_BLOCK, 0)
 
 for j in range(GRID_SIZE):
     methods.random_number(Grid)
@@ -48,12 +46,12 @@ def game_active_function():
                 if event.key == pygame.K_LEFT:
                     for row in range(len(Grid.massive)):
                         row_sorted = methods.sort_row_for_move_up_and_left(Grid.massive[row])
-                        Grid.massive[row] = methods.multiplication_by_2_left(row_sorted)
+                        Grid.massive[row] = methods.multiplication_by_2_left(row_sorted, Grid)
 
                 if event.key == pygame.K_RIGHT:
                     for row in range(len(Grid.massive)):
                         row_sorted = methods.sort_row_for_move_down_and_right(Grid.massive[row])
-                        Grid.massive[row] = methods.multiplication_by_2_right(row_sorted)
+                        Grid.massive[row] = methods.multiplication_by_2_right(row_sorted, Grid)
 
                 elif event.key == pygame.K_UP:
                     # Add a list that swaps columns and rows
@@ -65,7 +63,7 @@ def game_active_function():
                     for j in massive_for_move_up:
                         # First sort the list, then multiply by 2
                         massive_sorted = methods.sort_row_for_move_up_and_left(j)
-                        massive_for_move_up_sorted.append(methods.multiplication_by_2_left(massive_sorted))
+                        massive_for_move_up_sorted.append(methods.multiplication_by_2_left(massive_sorted, Grid))
 
                     # Transpose massive_for_move_up_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_up_sorted)))
@@ -80,7 +78,7 @@ def game_active_function():
                     for j in massive_for_move_down:
                         # First sort the list, then multiply by 2
                         j = methods.sort_row_for_move_down_and_right(j)
-                        massive_for_move_down_sorted.append(methods.multiplication_by_2_right(j))
+                        massive_for_move_down_sorted.append(methods.multiplication_by_2_right(j, Grid))
 
                     # Transpose massive_for_move_down_sorted
                     Grid.massive = list(map(list, zip(*massive_for_move_down_sorted)))
@@ -98,6 +96,7 @@ def game_active_function():
                 sys.exit()
 
         Grid.build_grid()
+        Grid.score_count()
 
         pygame.display.flip()
 
