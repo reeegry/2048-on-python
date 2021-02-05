@@ -54,22 +54,24 @@ def sort_row_for_move_up_and_left(row_to_sort):
 
 # I had to divide the 2 methods below because in the situation [x, x, x, x] it is not clear how to proceed
 # If you can help me improve this part of the code, please commit
-def multiplication_by_2_left(sorted_massive, GridClass):
+def multiplication_by_2_left(sorted_massive, GridClass=None):
     for number in range(1, len(sorted_massive)):
         if sorted_massive[number - 1] == sorted_massive[number] and sorted_massive[number] != 0:
             sorted_massive[number] *= 2
-            GridClass.score += sorted_massive[number]
+            if GridClass is not None:
+                GridClass.score += sorted_massive[number]
             del sorted_massive[number - 1]
             sorted_massive.append(0)
 
     return sorted_massive
 
 
-def multiplication_by_2_right(sorted_massive, GridClass):
+def multiplication_by_2_right(sorted_massive, GridClass=None):
     for number in range(len(sorted_massive) - 1, 0, -1):
         if sorted_massive[number - 1] == sorted_massive[number] and sorted_massive[number] != 0:
             sorted_massive[number] *= 2
-            GridClass.score += sorted_massive[number]
+            if GridClass is not None:
+                GridClass.score += sorted_massive[number]
             del sorted_massive[number - 1]
             sorted_massive.insert(0, 0)
 
@@ -83,3 +85,9 @@ def column_to_row(massive_for_move, grid_massive):
             # Add to massive_for_move_down a line that was a column in mas
             massive_for_add.append(grid_massive[row][column])
         massive_for_move.append(massive_for_add)
+
+
+def create_start_numbers(GRID_SIZE, GridClass):
+    for j in range(GRID_SIZE):
+        random_number(GridClass)
+    return GridClass.massive

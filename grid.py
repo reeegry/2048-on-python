@@ -17,6 +17,7 @@ class BuildGrid:
         self.score = score
 
     def build_grid(self):
+        self.screen.fill(self.BLACK)
         for row in range(self.row):
             for column in range(self.column):
                 x = column * self.SIZE_BLOCK + (column + 1) * self.MARGIN

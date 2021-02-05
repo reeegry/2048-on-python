@@ -3,6 +3,7 @@ import pygame
 import sys
 import grid
 import methods
+import my_menu
 
 GRID_SIZE = 4
 
@@ -23,17 +24,15 @@ mas = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
 
 Grid = grid.BuildGrid(mas, SIZE_BLOCK, MARGIN, BLACK, WHITE, screen, '', GRID_SIZE, GRID_SIZE, UP_BLOCK, 0)
 
-for j in range(GRID_SIZE):
-    methods.random_number(Grid)
+methods.create_start_numbers(GRID_SIZE, Grid)
 
 pygame.init()
 
 
-def game_active_function():
+def start_the_game():
 
     game_active = True
     add_2_or_4_on_grid = False
-    count = 0
 
     while game_active:
         for event in pygame.event.get():
@@ -88,17 +87,30 @@ def game_active_function():
                 else:
                     add_2_or_4_on_grid = True
 
-        no_zeroes = 0
-        for row in Grid.massive:
-            if 0 not in row:
-                no_zeroes += 1
-            if no_zeroes == GRID_SIZE:
-                sys.exit()
-
         Grid.build_grid()
         Grid.score_count()
 
         pygame.display.flip()
+
+        no_zeroes = 0
+        # Change the column with a row to check for identity
+        left_column_to_row_multiplication_check = []
+        row_column_to_row_check = []
+        methods.column_to_row(left_column_to_row_multiplication_check, Grid.massive)
+        methods.column_to_row(row_column_to_row_check, Grid.massive)
+        for row in range(len(Grid.massive)):
+            if 0 not in Grid.massive[row]:
+                no_zeroes += 1
+            # If it is not possible to multiply a row or column by 2 (the rows are equal)
+            # Then we reset the list, show the menu, reset the points
+            if no_zeroes == GRID_SIZE and methods.multiplication_by_2_right(Grid.massive[row]) == Grid.massive[row]\
+                    and methods.multiplication_by_2_right(left_column_to_row_multiplication_check[row]) == \
+                                                          row_column_to_row_check[row]:
+                Grid.massive = [[0] * GRID_SIZE for i in range(GRID_SIZE)]
+                methods.create_start_numbers(GRID_SIZE, Grid)
+                Grid.score = 0
+                pygame.time.delay(750)
+                my_menu.create_menu(start_the_game, screen)
 
         if add_2_or_4_on_grid:
             pygame.time.delay(120)
@@ -107,4 +119,4 @@ def game_active_function():
 
 
 if __name__ == '__main__':
-    game_active_function()
+    my_menu.create_menu(start_the_game, screen)
